@@ -1,4 +1,4 @@
-d3.json('samples.json').then((data) => {
+d3.json('../static/Resources/samples.json').then((data) => {
     
     // add all patients the the dropdown option
     var names= data.names;
@@ -8,7 +8,7 @@ d3.json('samples.json').then((data) => {
 
 });
 function optionChanged(value) {
-    d3.json('samples.json').then((data) => {
+    d3.json('../static/Resources/samples.json').then((data) => {
 
    
         var samp_val=data.samples;
