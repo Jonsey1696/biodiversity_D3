@@ -7,18 +7,20 @@ d3.json('../static/Resources/samples.json').then((data) => {
     });
 
 });
+// functon to listen for dropdown change and populate values
 function optionChanged(value) {
     d3.json('../static/Resources/samples.json').then((data) => {
 
    
         var samp_val=data.samples;
+        // remove old charts
         d3.selectAll('p').remove();
 
         var otuIDstring = [];
         var sampleValues = [];
         var otuLabels=[];
         var otuIds=[];
-
+// filter values to match dropdown selection
         samp_val.forEach(person => {
             if (person.id === value){
                 sampleValues= person.sample_values;
@@ -30,6 +32,7 @@ function optionChanged(value) {
             }
         })
         weekly=[]
+        // filter and push summary data
         var Metadata=data.metadata;
         Metadata.forEach(person => {
             if (person.id == value){
@@ -43,6 +46,7 @@ function optionChanged(value) {
             }
         })
         console.log(wash)
+        // create gauge chart
         var trace3 ={
             domain: { x: [0, 1], y: [0, 1] },
 		    value: wash,
@@ -53,8 +57,7 @@ function optionChanged(value) {
         var data3=[trace3];
         Plotly.newPlot('gauge', data3, layout3);
 
-
-
+// create bar plots
         var trace1={
             type:'bar',
             x:sampleValues.slice(0,10).reverse(),
@@ -67,7 +70,7 @@ function optionChanged(value) {
 
         var layout={};
         Plotly.newPlot('bar', data, layout)
-
+// create bubble chart
         var trace2={
             x:otuIds,
             y:sampleValues,
